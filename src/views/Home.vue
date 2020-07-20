@@ -27,6 +27,10 @@
         <h2 class="headline font-weight-bold mb-3">
           View Courses
         </h2>
+        <v-card raised rounded>
+          <Calendar/>
+        </v-card>
+
         <h3 class="mx-auto mb-4">
           Pre-Yr 11 Summer Courses for GCSE
         </h3>
@@ -61,10 +65,13 @@
 <script>
   import Vue from 'vue';
   import db from '@/db.js';
+  import Calendar from "@/components/Calendar.vue";
 
   export default Vue.extend({
     name: 'Home',
-
+    components:{
+      Calendar
+    },
     data: () => ({
       Subjects: [],
     }),
