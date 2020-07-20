@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@477&display=swap" rel="stylesheet">
     <v-app-bar
       app
       :color="colors.primary"
@@ -7,10 +8,10 @@
     >
       <div class="d-flex align-center">
         <v-img
-          alt="Vuetify Logo"
+          alt="TutorGuides Logo"
           class="shrink mr-2"
           contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          :src="require('./assets/images/icon.png')"
           transition="scale-transition"
           width="40"
         />
@@ -19,7 +20,7 @@
           class="shrink mt-1 hidden-sm-and-down"
           id="app_name"
         >
-          TutorGuide
+          TutorGuides
         </h2>
       </div>
 
@@ -35,9 +36,9 @@
       </v-btn>
 
     </v-app-bar>
-    <v-content>
+    <v-main>
         <router-view/>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
@@ -47,7 +48,7 @@ export default {
   name: 'App',
   data: () => ({
     colors: {
-      primary:"#4122DD",
+      primary:"#137CC3",
       secondary:"#DD4122",
       accents:"#22DD41"
     }
@@ -56,16 +57,12 @@ export default {
 </script>
 
 <style lang="scss">
-  $primary: #4122DD;
+  $primary: #02057F;
   $secondary: #DD4122;
   $accents: #22DD41;
-  @font-face {
-    font-family: Sora;
-    src: url('/assets/fonts/Sora-weightable.ttf');
-  }
 
   html, #app{
-    font-family: Sora, Roboto ,sans-serif;
+    font-family: Sora ,serif;
     background-image: url("assets/images/white.png");
   }
 </style>
