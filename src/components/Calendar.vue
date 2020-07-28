@@ -1,16 +1,21 @@
 <template>
-    <full-calendar :events="events">
+    <full-calendar :events="events" :config="config">
     </full-calendar>
 </template>
 
 <script>
     import Vue from 'vue';
-    import db from "@/db.js";
-
+    import firebase from "@/firebase.js";
+    const db = firebase.firestore()
     export default Vue.extend({
         name: "Calendar",
         data: () => ({
-            lessons: {}
+            lessons: {},
+            config: {
+                editable:false,
+                slotDuration: '01:00:00',
+                scrollTime: '12:00:00',
+            }
         }),
         props: {
             forUser: Boolean,
@@ -38,6 +43,7 @@
                 Event.title = Lesson.Subject + ' by ' + Lesson.Tutor
                 Event.start = Lesson.start.toDate()
                 Event.end = Lesson.end.toDate()
+                Event.textColor = 'white';
                 return Event
             }
         }

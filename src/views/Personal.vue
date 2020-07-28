@@ -17,22 +17,21 @@
 
 <script>
     import Vue from 'vue';
-    import db from '../db.js';
+    import {db} from '@/firebase.js';
 
     export default Vue.extend({
         name: 'Personal',
         data: () => ({
-            tutor: {}
+            db,
+            tutors: {},
         }),
-        props: {
-            tutorID: String
-        },
         firestore: {
-            tutor: db.collection('Tutors').doc(this.tutorID)
+            tutors: db.collection('Tutors')
+        },
+        computed: {
+            tutor () {
+                return this.tutors.filter(x => x.id === this.$route.params.id)[0]
+            }
         }
     })
-    /*
-    TODO: Finish Personal Page
-
-     */
 </script>
