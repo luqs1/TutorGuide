@@ -34,8 +34,8 @@
           </v-card-title>
           <v-divider width="90%" class="mx-auto">
           </v-divider>
-          <v-card-text align="start">
-            {{tutor.Details.Summary}}
+          <v-card-text class="mx-auto">
+            {{tutor.Details.Summary[0]}}
           </v-card-text>
         </v-card>
       </v-col>

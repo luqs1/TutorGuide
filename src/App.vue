@@ -74,55 +74,53 @@
 <script>
 import Vue from 'vue';
 import router from "@/router";
-import {auth} from './firebase.js';
+import {auth, db} from './firebase.js';
 
 export default Vue.extend({
   name: 'App',
   data: () => ({
     auth,
-    claims: [],
+    db,
+    user: null,
     colors: {
       primary: "#137CC3",
       secondary: "#DD4122",
       accents: "#22DD41"
-    }
+    },
+    Links: router.options.routes.filter(route => ['Home', 'About Us'].includes(route.name))
   }),
   methods: {
     async signOut() {
       await auth.signOut();
+      if (router.currentRoute.path !== '/') {
+        await router.push('/');
+      }
       this.$forceUpdate()
     },
-    async getClaims () {
-      if (auth.currentUser != null) {
-        auth.currentUser.getIdTokenResult()
-                .then((idTokenResult) => {
-                  this.claims = []
-                  // Confirm the user is an Admin.
-                  if (idTokenResult.claims.student) {
-                    this.claims.push('student')
-                  }
-                  if (idTokenResult.claims.parent) {
-                    this.claims.push('parent')
-                  }
-                })
-      }
-    }
   },
-  computed: {
-    Links: function () {
+  watch: {
+    user: function () {
       let names = [
               'Home',
               'About Us'
               ]
-      if (this.claims.includes('student')) {
-        names.push('Student Portal')
+      if (auth.currentUser !== null) {
+        if (this.user.type === 'student') {
+            names.push('Student Portal')
+        }
+        if (this.user.type === 'parent') {
+            names.push('Parent Portal')
+        }
+
       }
-      if (this.claims.includes('parent')) {
-        names.push('Parent Portal')
-      }
-      return router.options.routes.filter(route => names.includes(route.name))
+      this.Links = router.options.routes.filter(route => names.includes(route.name))
     }
   },
+  async beforeUpdate() {
+    if (auth.currentUser !== null && this.user === null) {
+      await this.$bind('user', db.collection('users').doc(auth.currentUser.uid))
+    }
+  }
 })
 </script>
 

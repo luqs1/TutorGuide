@@ -59,8 +59,15 @@
                 {{course.Name}}
               </v-card-title>
               <v-card-text>
-                {{course.Description}}
-               </v-card-text>
+                <p>
+                  {{course.Description[0]}}
+                </p>
+                <ul>
+                  <li v-for="(topic, id) in course.Topics" :key="id">
+                    {{topic}}
+                  </li>
+                </ul>
+              </v-card-text>
             </v-card>
           </v-dialog>
         </v-row>
@@ -94,7 +101,14 @@
                 {{course.Name}}
               </v-card-title>
               <v-card-text>
-                {{course.Description}}
+                <p>
+                  {{course.Description[0]}}
+                </p>
+                <ul>
+                  <li v-for="(topic, id) in course.Topics" :key="id">
+                    {{topic}}
+                  </li>
+                </ul>
               </v-card-text>
             </v-card>
           </v-dialog>

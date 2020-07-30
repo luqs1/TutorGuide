@@ -10,6 +10,20 @@ const cors = require('cors')({origin:true});
 // });
 
 admin.initializeApp();
+function getEmail(to, code) {
+    return {
+        to,
+        subject: 'TutorGuides Parent Code',
+        html: `<h1>Welcome to TutorGuides</h1>
+               <p>Thank you for making an account with us.
+               All that's left is to create a student account using this code:
+               `+code+`<br/> After the free 1hr trial lesson, lessons can be purchased individually with Pay as you Go
+               or in discounted bundles on our website. </p> 
+               <p>TutorGuides,
+                    Foundation for Excellence</p>`
+    }
+}
+
 
 /**
  * Here we're using Gmail to send
@@ -22,21 +36,14 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-exports.sendMailLink = functions.https.onRequest( (req, res) => {
+exports.sendParentMailLink = functions.https.onRequest( (req, res) => {
     cors(req, res, () => {
 
         // getting dest email by query string
         const dest = req.query.dest;
+        const code = req.query.code;
+        const mailOptions = {from:'contact.tutorguides@gmail.com',...getEmail(dest, code)}
 
-        const mailOptions = {
-            from: 'contact.tutorguides@gmail.com', // Something like: Jane Doe <janedoe@gmail.com>
-            to: dest,
-            subject: 'Tutor Guides Registration', // email subject
-            html: `<h1>Welcome to TutorGuides</h1>
-                    <p>Thank you for signing up with us.</p>`
-        };
-
-        // returning result
         return transporter.sendMail(mailOptions, (err, info) => {
             if(err){
                 return res.send(err.toString()+info);
@@ -46,34 +53,11 @@ exports.sendMailLink = functions.https.onRequest( (req, res) => {
     });
 });
 
-exports.sendMail = functions.https.onCall((data, context) => {
-    cors(data, context, () => {
-
-        // getting dest email by query string
-
-        const mailOptions = {
-            from: 'contact.tutorguides@gmail.com', // Something like: Jane Doe <janedoe@gmail.com>
-            to: data.to,
-            subject: data.subject, // email subject
-            html: data.html
-        };
-
-        // returning result
-        return transporter.sendMail(mailOptions, (error, info) => {
-            if(error){
-                return {sent:false, error, info};
-            }
-            return {sent:true, info};
-        });
-    });
-    //data needs to, subject and html
-});
-
 exports.setUserClaims = functions.https.onCall( ( async (data, context) => {
     let student = data.type === 'student';
     let parent = data.type === 'parent';
-    await admin.auth().setCustomUserClaims(data.uid, {student, parent})
-    // data needs type and uid
+    await admin.auth().setCustomUserClaims(context.auth.uid, {student, parent})
+    // data needs type
 }))
 
 exports.setUserDoc = functions.https.onCall((async (data, context) => {

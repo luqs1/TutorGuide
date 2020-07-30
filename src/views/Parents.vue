@@ -1,19 +1,38 @@
 <template>
     <v-container v-if="isParent">
-      IT WORKS
     </v-container>
 </template>
-
 <script>
     import Vue from 'vue';
-    import {auth} from "@/firebase";
+    import {auth, db} from "@/firebase";
+    import router from "@/router";
 
     export default Vue.extend({
       name: "Parents",
       data: () => ({
         auth,
-        isParent: auth.currentUser.getIdToken().then((r) => {return r.claims.parent})
-      })
+        db,
+        isParent: false,
+        user: null
+      }),
+      methods: {
+        async checkIsParent() {
+          await this.$bind('user', db.collection('users').doc(auth.currentUser.uid))
+          this.isParent = (this.user.type === 'parent')
+        }
+      },
+
+      async mounted() {
+        await this.checkIsParent()
+        if (!this.isParent) {
+          if (this.user.type === 'student') {
+            await router.push('/students')
+          }
+          else {
+            await router.push('/')
+          }
+        }
+      },
     })
 </script>
 

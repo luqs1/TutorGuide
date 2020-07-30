@@ -1,16 +1,70 @@
 <template>
     <v-container>
-        <v-row class="text-center">
-            <v-col cols="12">
-               <h1>
-                   {{tutor.Name.FirstName + ' ' + tutor.Name.Surname}}
-               </h1>
+        <v-row>
+          <v-col cols="4">
+            <v-img width="200px" height="200px">
+              LOL IM AN IMAGE
+            </v-img>
+            <v-row class="text-center">
+              <v-col cols="8">
                 <v-card>
-                    <v-card-text>
-                        {{tutor.Details.Summary}}
-                    </v-card-text>
+                  <v-card-title class="text-center">
+                    {{tutor.Name.FirstName + ' ' + tutor.Name.Surname}}
+                  </v-card-title>
                 </v-card>
-            </v-col>
+              </v-col>
+            </v-row>
+
+          </v-col>
+          <v-col cols="8">
+            <v-card>
+              <v-card-title>
+                Introduction
+              </v-card-title>
+              <v-card-text>
+                {{tutor.Details.Summary[0]}}
+              </v-card-text>
+            </v-card>
+          </v-col>
+          <v-col cols="3">
+            <v-card>
+              <v-card-title>
+                Subjects Taught
+              </v-card-title>
+              <v-card-text>
+                <ul>
+                  <li v-for="(subject, id) in tutor.Details.Subjects" :key="id" class="text-left">
+                    {{subject}}
+                  </li>
+                </ul>
+              </v-card-text>
+            </v-card>
+          </v-col>
+          <v-col cols="9">
+            <v-row>
+              <v-col>
+                <v-card>
+                  <v-card-title>
+                    Education and Qualifications
+                  </v-card-title>
+                  <v-card-text>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+              <v-col cols="12">
+                <v-card>
+                  <v-card-title> Incorporate into above?</v-card-title>
+                  <v-card-text>{{tutor.Details.Summary[1]}}</v-card-text>
+                </v-card>
+              </v-col>
+              <v-col cols="12">
+                <v-card>
+                  <v-card-title>Tutoring Experience</v-card-title>
+                  <v-card-text>{{tutor.Details.Summary[2]}}</v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-col>
         </v-row>
     </v-container>
 </template>

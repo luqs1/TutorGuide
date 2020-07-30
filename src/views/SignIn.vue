@@ -41,8 +41,17 @@
                             Make sure you have already made a parent account.
                         </v-card-subtitle>
                       <v-card-actions>
-                        <v-text-field v-model="regCode" label="Parent Account Code" size="50%">
-                        </v-text-field>
+                        <v-row class="text-center">
+                          <v-col cols="11" class="mx-auto">
+                            <v-text-field v-model="regCode" label="Parent Account Code" :append-icon="regCodeValid? 'mdi-shield-check' : 'mdi-shield-alert'">
+                            </v-text-field>
+                          </v-col>
+                          <v-col>
+                            <v-btn class="mx-auto my-auto" @click="validateRegCode">
+                              Verify
+                            </v-btn>
+                          </v-col>
+                        </v-row>
                       </v-card-actions>
 
                     </v-card>
@@ -72,9 +81,9 @@
     import Vue from 'vue';
     import 'firebaseui/dist/firebaseui.css';
     import {auth, functions, db} from "@/firebase.js";
-    import getEmail from "@/custom/parentRegistrationEmail.js";
     const firebase = require('firebase/app');
     const firebaseui = require('firebaseui');
+    const axios = require('axios')
 
     export default Vue.extend({
         name: 'SignIn',
@@ -114,7 +123,9 @@
                     },
                     options: {merge: true}
                   })
-                  await setClaims(that.userType)
+                  await setClaims({
+                    type:that.userType,
+                })
                   if (that.userType === 'parent') {
                     that.parentRegister()
                   }
@@ -145,18 +156,37 @@
             options: {merge: true},
             document: {code}
           })
-          const data = getEmail(auth.currentUser.email, code);
-          const sendMail = functions.httpsCallable('sendMail');
-          sendMail(data)
+          axios.get('https://us-central1-tutorguide-7059d.cloudfunctions.net/sendParentMailLink', {
+            params: {
+              code,
+              dest :auth.currentUser.email,
+            }
+          })
+          // TODO: do the email
         },
-        studentRegister: function (parentRef) {
-          const parent = db.collection('users').doc(parentRef)
-          this.setUserDoc({
-            options: {merge:true},
+        studentRegister: async function () {
+          const parent = await this.validateRegCode()
+          await this.setUserDoc({
+            options: {merge: true},
             document: {parent}
           })
         },
-        setUserDoc: functions.httpsCallable('setUserDoc')
+        setUserDoc: functions.httpsCallable('setUserDoc'),
+        validateRegCode : async function () {
+          if (this.regCode === '') {
+            this.regCodeValid = false
+            return 'false'
+          }
+          const query = db.collection('users').where('code', '==', this.regCode);
+          const snapshot = await query.get()
+          console.log(snapshot)
+          if (snapshot.empty) {
+            this.regCodeValid = false
+            return 'false'
+          }
+          this.regCodeValid = true
+          return snapshot.docs[0].id
+        }
       },
       mounted() {
           this.load('student')
