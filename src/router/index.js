@@ -17,7 +17,14 @@ Vue.use(VueRouter)
     {
       path: '/parents',
       name: 'Parent Portal',
-      component: () => import('../views/Parents.vue')
+      component: () => import('../views/Parents.vue'),
+      children: [
+        {
+          path: 'calendars',
+          name: 'Calendars',
+          component: () => import('../views/Parents/Calendars.vue')
+        }
+      ]
     },
     {
       path: '/sign_in',

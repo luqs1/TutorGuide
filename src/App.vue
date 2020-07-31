@@ -66,8 +66,25 @@
       <v-btn v-if="(auth.currentUser!=null)" @click='signOut()'>Logout</v-btn>
     </v-app-bar>
     <v-main>
-        <router-view/>
+        <router-view @notify="snackbarShow"/>
     </v-main>
+    <v-snackbar
+        :timeout="6000"
+        v-model="snackbar"
+    >
+      {{ payload }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+            color="pink"
+            text
+            v-bind="attrs"
+            @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -79,6 +96,8 @@ import {auth, db} from './firebase.js';
 export default Vue.extend({
   name: 'App',
   data: () => ({
+    snackbar: false,
+    payload: '',
     auth,
     db,
     user: null,
@@ -97,23 +116,27 @@ export default Vue.extend({
       }
       this.$forceUpdate()
     },
+    snackbarShow (payload) {
+      this.payload = payload
+      this.snackbar = true
+    }
   },
   watch: {
     user: function () {
       let names = [
-              'Home',
-              'About Us'
+              '/',
+              '/about_us'
               ]
       if (auth.currentUser !== null) {
         if (this.user.type === 'student') {
-            names.push('Student Portal')
+            names.push('/students')
         }
         if (this.user.type === 'parent') {
-            names.push('Parent Portal')
+          names.push('/parents')
         }
-
+        console.log(names)
       }
-      this.Links = router.options.routes.filter(route => names.includes(route.name))
+      this.Links = router.options.routes.filter(route => names.includes(route.path))
     }
   },
   async beforeUpdate() {

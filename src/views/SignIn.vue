@@ -21,7 +21,7 @@
                         As Student
                     </v-btn>
                     <v-btn class="pa-4">
-                        As Parent
+                        As Parents
                     </v-btn>
                     -->
                 </v-radio-group>
@@ -130,7 +130,7 @@
                     that.parentRegister()
                   }
                   if (that.userType === 'student') {
-                    that.studentRegister()
+                    await that.studentRegister()
                   }
                 }
                 // await auth.currentUser.getIdToken(true)
@@ -141,6 +141,7 @@
                 if (idToken.claims.student) {
                   that.userType = 'student'
                 }
+                that.$emit('notify', 'Successfully signed in')
               }
             },
             signInFlow:'popup',

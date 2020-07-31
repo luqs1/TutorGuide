@@ -24,7 +24,7 @@ export default Vue.extend({
 
   async mounted() {
     await this.checkIsStudent()
-    if (!this.isParent) {
+    if (!this.isStudent) {
       if (this.user.type === 'parent') {
         await router.push('/parents')
       }

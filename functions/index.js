@@ -13,7 +13,7 @@ admin.initializeApp();
 function getEmail(to, code) {
     return {
         to,
-        subject: 'TutorGuides Parent Code',
+        subject: 'TutorGuides Parents Code',
         html: `<h1>Welcome to TutorGuides</h1>
                <p>Thank you for making an account with us.
                All that's left is to create a student account using this code:
