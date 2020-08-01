@@ -13,7 +13,7 @@
             </v-radio>
             <v-radio
                 label="Student's Calendar"
-                value="true">
+                :value="true">
             </v-radio>
           </v-radio-group>
         </v-col>
@@ -32,7 +32,7 @@ export default Vue.extend({
   data: () => ({
     forUser: false,
     student: null,
-    students: []
+    students: [],
   }),
   components: {
     Calendar

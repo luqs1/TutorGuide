@@ -35,41 +35,7 @@
           Pre-Yr 11 Summer Courses for GCSE
         </h3>
         <v-row justify="center">
-          <v-dialog
-                  v-for="(course, i) in NonMaths.slice(0,4)"
-                  :key="i"
-                  @click="$router.push(('/subjects/'+course.Name))"
-                  class="subheading mx-3"
-                  v-model="dialog[1][i]"
-                  width="500"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                      color="red lighten-2"
-                      dark
-                      v-bind="attrs"
-                      class="subheading mx-3 my-3"
-                      v-on="on">
-                {{course.Name}}
-              </v-btn>
-            </template>
-
-            <v-card>
-              <v-card-title class="headline grey lighten-2">
-                {{course.Name}}
-              </v-card-title>
-              <v-card-text>
-                <p>
-                  {{course.Description[0]}}
-                </p>
-                <ul>
-                  <li v-for="(topic, id) in course.Topics" :key="id">
-                    {{topic}}
-                  </li>
-                </ul>
-              </v-card-text>
-            </v-card>
-          </v-dialog>
+          <SubjectButton v-for="(subject, id) in NonMaths.slice(0,4)" :course="subject" :key="id"></SubjectButton>
         </v-row>
       </v-col>
       <v-col>
@@ -77,41 +43,7 @@
 
         <h3 class="mx-auto my-5 mb-4">Pre-Yr 11 Summer Courses for Mathematics</h3>
         <v-row justify="center">
-          <v-dialog
-                  v-for="(course, i) in Maths"
-                  :key="i"
-                  @click="$router.push(('/subjects/'+course.Name))"
-                  class="subheading mx-3"
-                  v-model="dialog[0][i]"
-                  width="500"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                      color="red lighten-2"
-                      dark
-                      v-bind="attrs"
-                      class="subheading mx-3 my-3"
-                      v-on="on">
-                {{course.Name}}
-              </v-btn>
-            </template>
-
-            <v-card>
-              <v-card-title class="headline grey lighten-2">
-                {{course.Name}}
-              </v-card-title>
-              <v-card-text>
-                <p>
-                  {{course.Description[0]}}
-                </p>
-                <ul>
-                  <li v-for="(topic, id) in course.Topics" :key="id">
-                    {{topic}}
-                  </li>
-                </ul>
-              </v-card-text>
-            </v-card>
-          </v-dialog>
+          <SubjectButton v-for="(subject, id) in Maths" :course="subject" :key="id"></SubjectButton>
         </v-row>
       </v-col>
     </v-row>
@@ -122,12 +54,14 @@
   import Vue from 'vue';
   import firebase from '@/firebase.js';
   import Calendar from "@/components/Calendar.vue";
+  import SubjectButton from "@/components/SubjectButton";
   const db = firebase.firestore()
 
   export default Vue.extend({
     name: 'Home',
     components:{
-      Calendar
+      Calendar,
+      SubjectButton
     },
     data: () => ({
       dialog:[
