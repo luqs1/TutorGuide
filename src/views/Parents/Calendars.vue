@@ -41,7 +41,7 @@ export default Vue.extend({
     async checkForStudents() {
       const query = db.collection('users').where('parent','==', auth.currentUser.uid)
       const snapshot = await query.get()
-      this.students = snapshot.docs
+      this.students = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}))
       this.student = this.students[0].id
     },
   },

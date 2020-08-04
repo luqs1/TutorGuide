@@ -23,6 +23,16 @@ Vue.use(VueRouter)
           path: 'calendars',
           name: 'Calendars',
           component: () => import('../views/Parents/Calendars.vue')
+        },
+        {
+          path: 'subjects/:subject',
+          name: 'Subjects',
+          component: () => import('../views/Parents/Subjects')
+        },
+        {
+          path: 'book/:lesson',
+          name: 'Book',
+          component: () => import('../views/Parents/Book.vue')
         }
       ]
     },

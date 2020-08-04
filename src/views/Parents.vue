@@ -3,6 +3,9 @@
       <v-row v-if="hasStudent">
         <v-col cols="3">
           <PortalNavbar title="Parent Portal" :subheading="auth.currentUser.email" :nav-links="navLinks"/>
+          <v-btn @click="router.push('/parents')" class="my-5">
+            Back
+          </v-btn>
         </v-col>
         <v-col cols ='9'>
           <router-view></router-view>
@@ -28,6 +31,7 @@ import PortalNavbar from "@/components/PortalNavbar";
 export default Vue.extend({
   name: "Parents",
   data: () => ({
+    router,
     auth,
     db,
     isParent: false,
@@ -52,7 +56,7 @@ export default Vue.extend({
       }
       else {
         this.hasStudent = true
-        this.students = snapshot.docs
+        this.students = snapshot.docs.map(doc => doc.data())
       }
     }
   },

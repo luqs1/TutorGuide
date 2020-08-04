@@ -4,13 +4,14 @@
       Loading...
     </v-card-title>
   </v-card>
-    <full-calendar :events="events" :config="config" v-else>
+    <full-calendar ref="calendar" :events="events" :config="config" v-else>
     </full-calendar>
 </template>
 
 <script>
     import Vue from 'vue';
     import firebase from "@/firebase.js";
+    import 'fullcalendar/dist/fullcalendar.css';
     const db = firebase.firestore()
     export default Vue.extend({
         name: "Calendar",
@@ -22,7 +23,6 @@
             slotDuration: '01:00:00',
             scrollTime: '12:00:00',
           },
-          snapshot: []
         }),
         props: {
             forUser: Boolean,
@@ -32,28 +32,15 @@
             lessons: db.collection('Lessons')
         },
         computed: {
-            events: function () {
-                let lessons;
-                if (this.forUser === true) {
-                  if (this.loading) {
-                    lessons = []
-                  }
-                  else {
-                    lessons = this.snapshot
-
-                    if (lessons.empty) {
-                      lessons = []
-                    }
-                    else {
-                      lessons = lessons.docs
-                    }
-                  }
-                }
-                else {
-                    lessons = this.lessons
-                }
-                return lessons.map(this.LessonEvent)
-            }
+           events: function () {
+             if (!this.forUser) {
+               return this.lessons.map(this.LessonEvent)
+             }
+             if (this.loading || this.snapshot === undefined || this.snapshot.empty) {
+               return []
+             }
+             return this.snapshot.map(this.LessonEvent)
+           }
         },
         methods: {
             LessonEvent: function (Lesson) {
@@ -80,7 +67,9 @@
           forUser: async function () {
             console.log('For User changed')
             this.loading = true
+            await this.$forceUpdate()
             await this.init()
+            this.$refs.calendar.fireMethod('refetchEvents')
           }
       },
       async mounted() {

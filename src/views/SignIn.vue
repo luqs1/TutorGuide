@@ -155,7 +155,11 @@
           const code = auth.currentUser.uid.slice(0,6)
           this.setUserDoc({
             options: {merge: true},
-            document: {code}
+            document: {
+              code,
+              hasFreeTrial: true,
+              lessons: 0,
+            }
           })
           axios.get('https://us-central1-tutorguide-7059d.cloudfunctions.net/sendParentMailLink', {
             params: {
