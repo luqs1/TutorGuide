@@ -30,7 +30,7 @@ Vue.use(VueRouter)
           component: () => import('../views/Parents/Subjects')
         },
         {
-          path: 'book/:lesson',
+          path: 'book',
           name: 'Book',
           component: () => import('../views/Parents/Book.vue')
         }

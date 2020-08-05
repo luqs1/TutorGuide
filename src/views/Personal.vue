@@ -2,7 +2,7 @@
     <v-container>
         <v-row>
           <v-col cols="4">
-            <v-img width="200px" height="200px">
+            <v-img width="200px" height="200px" v-if="false">
               LOL IM AN IMAGE
             </v-img>
             <v-row class="text-center">
@@ -43,7 +43,7 @@
           <v-col cols="9">
             <v-row>
               <v-col>
-                <v-card>
+                <v-card v-if="false">
                   <v-card-title>
                     Education and Qualifications
                   </v-card-title>
@@ -53,7 +53,7 @@
               </v-col>
               <v-col cols="12">
                 <v-card>
-                  <v-card-title> Incorporate into above?</v-card-title>
+                  <v-card-title> Further Details</v-card-title>
                   <v-card-text>{{tutor.Details.Summary[1]}}</v-card-text>
                 </v-card>
               </v-col>

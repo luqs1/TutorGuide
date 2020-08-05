@@ -56,7 +56,7 @@ export default Vue.extend({
       }
       else {
         this.hasStudent = true
-        this.students = snapshot.docs.map(doc => doc.data())
+        this.students = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}))
       }
     }
   },

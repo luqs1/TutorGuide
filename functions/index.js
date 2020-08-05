@@ -64,3 +64,20 @@ exports.setUserDoc = functions.https.onCall((async (data, context) => {
     await admin.firestore().collection('users').doc(context.auth.uid).set(data.document, data.options ? data.options : {})
     // data needs document and options
 }))
+
+exports.updateUserDoc = functions.https.onCall((async (data, context) => {
+    await admin.firestore().collection('users').doc(context.auth.uid).update(data)
+    //data needs to be in {field: value} form
+}))
+
+exports.addToLesson = functions.https.onCall(( async (data,context) => {
+    let newStudents = data.students;
+    newStudents.push(data.student);
+    await admin.firestore().collection('Lessons').doc(data.lesson).update({Students: newStudents})
+    // data need students old list, new student, and lesson (id)
+}))
+
+exports.addPayment = functions.https.onCall(( async (data,context) => {
+    await admin.firestore().collection('Payments').add(data)
+    // data is the payment object
+}))

@@ -1,5 +1,10 @@
 <template>
   <v-container v-if="isStudent">
+    <v-card>
+      <v-card-title>
+        W.I.P. Links will be emailed to you directly, temporarily.
+      </v-card-title>
+    </v-card>
   </v-container>
 </template>
 <script>
