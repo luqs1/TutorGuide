@@ -2,7 +2,17 @@
   <v-container v-if="isStudent">
     <v-card>
       <v-card-title>
-        W.I.P. Links will be emailed to you directly, temporarily.
+        The Student Portal is currently Work In Progress
+      </v-card-title>
+      <v-card-text>
+        When you sign up for lessons, you will be sent Zoom and Google Classroom codes by email.
+      </v-card-text>
+    </v-card>
+  </v-container>
+  <v-container v-else>
+    <v-card>
+      <v-card-title>
+        Loading...
       </v-card-title>
     </v-card>
   </v-container>
@@ -17,24 +27,30 @@ export default Vue.extend({
   data: () => ({
     auth,
     db,
-    isStudent: false,
     user: null
   }),
-  methods: {
-    async checkIsStudent() {
-      await this.$bind('user', db.collection('users').doc(auth.currentUser.uid))
-      this.isStudent = (this.user.type === 'student')
+  firestore:{
+    user: db.collection('users').doc(auth.currentUser.uid)
+  },
+  computed: {
+    userLoaded () {
+      return this.user !== null
+    },
+    isStudent () {
+      if (!this.userLoaded) {
+        return false
+      }
+      return this.user.type === 'student'
     }
   },
-
   async mounted() {
-    await this.checkIsStudent()
     if (!this.isStudent) {
-      if (this.user.type === 'parent') {
-        await router.push('/parents')
-      }
-      else {
-        await router.push('/')
+      if (this.userLoaded) {
+        if (this.user.type === 'parent') {
+          await router.push('/parents')
+        } else {
+          await router.push('/')
+        }
       }
     }
   },

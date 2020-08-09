@@ -62,10 +62,10 @@
                         <v-card-title>
                             Parent
                         </v-card-title>
-                        <v-card-text>
+                        <v-card-text class="text--primary text-h6">
                             The sign up process is simple and easy!
-                            Create an account as a parent and a code will be sent to your email.
-                            The student should then use that code when signing up.
+                            Create an account as a parent and <strong> <em> a code will be sent to your email.
+                          The student should then use that code when signing up. </em> </strong>
 
                             Besides your 1 hour free trial lesson, the default payment method is Pay as You Go, which means payments are made for each lesson individually before they are booked.
                             You can also choose to purchase a bundle of lessons at once at a discounted price.
@@ -129,7 +129,7 @@
                     type:that.userType,
                 })
                   if (that.userType === 'parent') {
-                    that.parentRegister()
+                    await that.parentRegister()
                   }
                   if (that.userType === 'student') {
                     await that.studentRegister()
@@ -153,9 +153,9 @@
           this.$forceUpdate()
           this.userType = type;
         },
-        parentRegister: function ()   {
+        parentRegister: async function ()   {
           const code = auth.currentUser.uid.slice(0,6)
-          this.setUserDoc({
+          await this.setUserDoc({
             options: {merge: true},
             document: {
               code,
@@ -163,10 +163,10 @@
               lessons: 0,
             }
           })
-          axios.get('https://us-central1-tutorguide-7059d.cloudfunctions.net/sendParentMailLink', {
+          await axios.get('https://us-central1-tutorguide-7059d.cloudfunctions.net/sendParentMailLink', {
             params: {
               code,
-              dest :auth.currentUser.email,
+              dest: auth.currentUser.email,
             }
           })
           // TODO: do the email

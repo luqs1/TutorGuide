@@ -32,8 +32,15 @@
     </v-card>
     <v-card class="my-4">
       <v-card-title>
-        Free Trial
+        All payment schemes include the Free Trial
       </v-card-title>
+      <v-card-subtitle>
+        Meet our team through your free trial lesson!
+      </v-card-subtitle>
+      <v-card-text>
+        Choose a subject you want to work on and contact us for a free 1 hr trial lesson or a 30 minutes 1-1 with the tutor of your subject.
+        <br/> If you have any additional queries please contact us at <a href="mailto:contact.tutorguides@gmail.com">contact.tutorguides@gmail.com</a>
+      </v-card-text>
     </v-card>
   </v-container>
 </template>
@@ -44,7 +51,7 @@ export default Vue.extend({
   name: "Fees.vue",
   data: () => ({
     rows: [
-        ['PAYG', '£13.50', '£13.50', '-'],
+        ['Pay As You Go (PAYG)', '£13.50', '£13.50', '-'],
         ['5 Lesson Pack', '£60', '£12', '£7.50'],
         ['10 Lesson Pack', '£110', '£11', '£25']
     ]
