@@ -2,8 +2,7 @@
     <v-container>
         <v-row>
           <v-col cols="4">
-            <v-img width="200px" height="200px" v-if="false">
-              LOL IM AN IMAGE
+            <v-img class="ma-4" width="200px" height="200px" :src="require('../assets/images/profiles/'+tutor.Name.FirstName+tutor.Name.Surname+'.jpg')" >
             </v-img>
             <v-row class="text-center">
               <v-col cols="8">
@@ -43,11 +42,25 @@
           <v-col cols="9">
             <v-row>
               <v-col>
-                <v-card v-if="false">
+                <v-card>
                   <v-card-title>
                     Education and Qualifications
                   </v-card-title>
                   <v-card-text>
+                    <h4>Schooling</h4>
+
+                    <ul class="my-2">
+                    <li v-for="(school, id) in tutor.Education" :key="id">
+                      {{school.name}} :<br/> {{school.value}}
+                    </li>
+                    </ul>
+                    <br/>
+                    <h4>Additional Qualifications, Awards and Positions</h4>
+                    <ul class="my-2">
+                      <li v-for="(cert, id) in tutor.Qualifications" :key="id">
+                        {{cert}}
+                      </li>
+                    </ul>
                   </v-card-text>
                 </v-card>
               </v-col>
