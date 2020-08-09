@@ -16,11 +16,18 @@
           offering Maths, AdMaths/ Further Maths, Physics, Chemistry, Biology and Computer Science but are looking to offer
           even more subjects in the near future.
         </v-card-text>
-          <v-card-actions>
-            <v-btn @click="$router.push('/sign_in')">
-              Join now and secure your learning
-            </v-btn>
-          </v-card-actions>
+          <v-row>
+            <v-col></v-col>
+            <v-col>
+              <v-card-actions class="text-center">
+                <v-btn @click="$router.push('/sign_in')" color="primary">
+                  Join now and secure your learning
+                </v-btn>
+              </v-card-actions>
+            </v-col>
+            <v-col></v-col>
+          </v-row>
+
         </v-card>
       </v-col>
       <v-col></v-col>
@@ -28,9 +35,13 @@
         <h2>Meet the Team</h2>
       </v-col>
       <v-col cols="8" class="mx-auto" v-for="tutor in Tutors" v-bind:key="tutor.id">
-        <v-card :to="'/about_us/'+tutor.id">
+        <v-card :to="'/about_us/'+tutor.id" class="hover">
           <v-card-title>
             {{tutor.Name.FirstName + ' ' + tutor.Name.Surname}}
+            <v-spacer/>
+            <v-icon>
+              mdi-cursor-default-click
+            </v-icon>
           </v-card-title>
           <v-divider width="90%" class="mx-auto">
           </v-divider>
@@ -58,3 +69,14 @@
     }
   })
 </script>
+
+<style lang="scss">
+.hover::before {
+  color: transparent;
+  background-color: transparent;
+}
+.hover:hover {
+  color: blue;
+  background-color: lightblue;
+}
+</style>

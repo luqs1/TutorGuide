@@ -49,7 +49,7 @@
           </v-col>
         </v-row>
       </v-card-text>
-      <v-card-actions>
+      <v-card-actions v-if="!alreadyBooked">
         <v-btn v-if="paymentMethod==='PAYG'"
         @click="makePayment">
           Pay via Paypal

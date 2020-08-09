@@ -10,12 +10,12 @@
             <v-row>
               <v-col cols="12">
               </v-col>
-              <v-col cols="10">
+              <v-col cols="8">
                 <h3>
                   Prepaid Lessons:
                 </h3>
               </v-col>
-              <v-col cols="2">
+              <v-col cols="4">
                 <h3>
                   {{parent.lessons}}
                 </h3>
@@ -105,7 +105,9 @@ export default Vue.extend({
       if (this.filtered) {
         return this.filteredLessons
       }
-      return this.lessons
+      return this.lessons.filter(lesson => {
+        return lesson.start.toMillis() > Date.now() + 1.728e8
+      })
     },
     parent() {
       return this.$parent.user

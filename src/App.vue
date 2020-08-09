@@ -60,7 +60,7 @@
         </v-list>
       </v-menu>
 
-      <v-btn v-if="(auth.currentUser==null)" :to="'/sign_in'">Sign In
+      <v-btn v-if="(auth.currentUser==null)" :to="'/sign_in'">Sign In/Up
       </v-btn>
 
       <v-btn v-if="(auth.currentUser!=null)" @click='signOut()'>Logout</v-btn>
@@ -106,7 +106,7 @@ export default Vue.extend({
       secondary: "#DD4122",
       accents: "#22DD41"
     },
-    Links: router.options.routes.filter(route => ['Home', 'About Us'].includes(route.name))
+    Links: router.options.routes.filter(route => ['Home', 'About Us', 'Fees'].includes(route.name))
   }),
   methods: {
     async signOut() {
@@ -124,9 +124,10 @@ export default Vue.extend({
   watch: {
     user: function () {
       let names = [
-              '/',
-              '/about_us'
-              ]
+        '/',
+        '/about_us',
+        '/fees'
+      ]
       if (auth.currentUser !== null) {
         if (this.user.type === 'student') {
             names.push('/students')

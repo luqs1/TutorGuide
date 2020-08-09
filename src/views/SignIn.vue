@@ -2,9 +2,12 @@
     <v-container>
         <v-card v-if="!signedIn">
             <v-card-title>
-                <h1 class="my-5">
-                    Sign In/ Up
+                <h1 class="my-5" v-if="!registering">
+                    Sign In
                 </h1>
+              <h1 class="my-5" v-else>
+                Register
+              </h1>
             </v-card-title>
             <v-card-actions>
                 <v-radio-group v-model="userType" row>
@@ -93,8 +96,8 @@
           functions,
           registering: false,
           auth,
-          regCode:'',
-          userType: 'student',
+          regCode: '',
+          userType: 'parent',
           regCodeValid: false,
         }),
       methods: {
@@ -107,7 +110,6 @@
           }
           ui.start('#firebaseui-auth-container', {
             signInOptions: [
-              firebase.auth.EmailAuthProvider.PROVIDER_ID,
               firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             ],
             callbacks: {
@@ -194,7 +196,7 @@
         }
       },
       mounted() {
-          this.load('student')
+          this.load('parent')
       },
       computed: {
           showAuth: function () {

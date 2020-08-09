@@ -18,6 +18,18 @@
           Your one-stop tutor team to cope with GCSEs during the Covid-19 Outbreak.
         </p>
 
+        <v-btn class="mx-3" icon @click="window.open('https://www.instagram.com/tutor_guides/')">
+          <v-icon>
+            mdi-instagram
+          </v-icon>
+        </v-btn>
+
+        <v-btn class="mx-3" icon @click="window.open('https://www.facebook.com/tutor.guides.5')">
+          <v-icon>
+            mdi-facebook
+          </v-icon>
+        </v-btn>
+
       </v-col>
 
       <v-col
@@ -27,10 +39,6 @@
         <h2 class="headline font-weight-bold mb-3">
           View Courses
         </h2>
-        <v-card raised rounded width="95%" class="mx-auto mb-14">
-          <Calendar/>
-        </v-card>
-
         <h3 class="mx-auto my-5 mb-4">
           Pre-Yr 11 Summer Courses for GCSE
         </h3>
@@ -47,6 +55,12 @@
         </v-row>
       </v-col>
     </v-row>
+    <v-card raised rounded width="95%" class="mx-auto mb-14">
+      <v-card-title>
+        Lesson Calendar
+      </v-card-title>
+      <Calendar/>
+    </v-card>
   </v-container>
 </template>
 
@@ -64,6 +78,7 @@
       SubjectButton
     },
     data: () => ({
+      window,
       dialog:[
       ],
       Subjects: [],
