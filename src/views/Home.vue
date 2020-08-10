@@ -9,7 +9,7 @@
                 height="200"
         />
       </v-col>
-      <v-col class="mb-4">
+      <v-col class="mb-4" cols="12">
         <h1 class="display-2 font-weight-bold mb-3">
           Welcome to TutorGuides
         </h1>
@@ -31,6 +31,44 @@
         </v-btn>
 
       </v-col>
+      <v-col></v-col>
+
+      <v-col cols="8">
+        <v-card>
+          <v-card-title>
+            First time here?
+          </v-card-title>
+          <v-card-text class="text-left">
+            TutorGuides provides tutoring for a diverse range of subjects up to GCSE using Zoom and
+            Google Classroom for sharing material. Additionally, we provide parents with in-depth reports of their children's
+            progress and attainment. All tutoring is currently set to finish by the end of the summer holidays and is structured to
+            prepare students for the coming year.
+            <br/><br/>
+            Scroll down for more information on some of the subjects we offer and our schedule. Please note that lessons
+            can be added to the schedule by contacting us directly at contacts.tutorguides@gmail.com.
+            <br/> <br/>
+            Or get started by registering a parent and student account. <br/>
+            <strong>Lessons can be booked once registered.</strong>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn
+            :to="'/fees'">
+              Fee structure
+            </v-btn>
+            <v-spacer/>
+            <v-btn
+            :to="'/sign_in'">
+              Register now!
+            </v-btn>
+            <v-spacer/>
+            <v-btn
+            :to="'/about_us'">
+              About us
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+      <v-col></v-col>
 
       <v-col
               class="mb-5"

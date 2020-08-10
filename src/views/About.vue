@@ -32,6 +32,14 @@
       </v-col>
       <v-col></v-col>
       <v-col cols="12">
+        <v-card>
+          <v-card-subtitle>
+            If you have any questions or want to contact us directly: send us an email to
+            <a href="mailto:contact.tutorguides@gmail.com">contact.tutorguides@gmail.com</a>
+          </v-card-subtitle>
+        </v-card>
+      </v-col>
+      <v-col cols="12">
         <h2>Meet the Team</h2>
       </v-col>
       <v-col cols="8" class="mx-auto" v-for="tutor in Tutors" v-bind:key="tutor.id">
